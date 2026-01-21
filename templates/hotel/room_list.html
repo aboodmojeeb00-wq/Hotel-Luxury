@@ -1,0 +1,55 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Rooms - Luxury Hotel{% endblock %}
+{% block header %}All Rooms{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="action-bar" style="margin-bottom: 2rem; text-align: right;">
+    <a href="{% url 'room_create' %}" class="btn btn-primary" style="background-color: #d4af37; border-color: #d4af37; color: #000; font-weight: bold;">
+        <i class="fas fa-plus"></i> Add New Room
+    </a>
+</div>
+{% endif %}
+
+<div class="rooms-grid">
+    {% for room in rooms %}
+    <div class="room-card">
+        {% if room.image %}
+        <img src="{{ room.image.url }}" alt="Room {{ room.number }}" class="room-image">
+        {% else %}
+        <div class="no-image">No Image</div>
+        {% endif %}
+        <div class="room-info">
+            <div class="room-header-flex">
+                <h3>Room {{ room.number }}</h3>
+                <span class="badge {% if room.is_occupied %}badge-occupied{% else %}badge-available{% endif %}">
+                    {% if room.is_occupied %}Occupied{% else %}Available{% endif %}
+                </span>
+            </div>
+            <p class="room-type">{{ room.get_room_type_display }}</p>
+            <p class="room-price">${{ room.price_per_night }} / night</p>
+            <div class="room-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                <!-- View Button -->
+                <a href="{% url 'room_detail' room.pk %}" class="btn btn-xs btn-outline-info" style="border: 1px solid #17a2b8; color: #17a2b8; background: transparent;">
+                    <i class="fas fa-eye"></i> View
+                </a>
+
+                {% if user.is_authenticated %}
+                <!-- Edit Button -->
+                <a href="{% url 'room_update' room.pk %}" class="btn btn-xs btn-warning" style="background-color: #ffc107; border-color: #ffc107; color: #212529;">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <!-- Delete Button -->
+                <a href="{% url 'room_delete' room.pk %}" class="btn btn-xs btn-danger" style="background-color: #dc3545; border-color: #dc3545; color: #fff;">
+                    <i class="fas fa-trash"></i> Delete
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No rooms found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

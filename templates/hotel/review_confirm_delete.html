@@ -1,0 +1,16 @@
+﻿{% extends 'base.html' %}
+{% block title %}Delete Review - LuxeStay{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 border p-4 bg-dark text-white rounded">
+        <h2 class="text-danger">Delete Review?</h2>
+        <p>Are you sure you want to delete your review for <strong>{{ review.room.number }}</strong>?</p>
+        <p class="text-muted">"{{ review.comment }}"</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+            <a href="{% url 'review_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Bookings - Luxury Hotel{% endblock %}
+{% block header %}All Bookings{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="action-bar" style="margin-bottom: 2rem; text-align: right;">
+    <a href="{% url 'booking_create' %}" class="btn btn-primary" style="background-color: #d4af37; border-color: #d4af37; color: #000; font-weight: bold;">
+        <i class="fas fa-plus"></i> Add New Booking
+    </a>
+</div>
+{% endif %}
+
+<div class="table-container" style="background: #1a1a1a; padding: 20px; border-radius: 8px;">
+    <table class="table table-dark table-hover" style="width: 100%;">
+        <thead>
+            <tr>
+                <th style="color: #d4af37;">Guest</th>
+                <th style="color: #d4af37;">Room</th>
+                <th style="color: #d4af37;">Check In</th>
+                <th style="color: #d4af37;">Check Out</th>
+                <th style="color: #d4af37;">Total Paid</th>
+                <th style="color: #d4af37;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td><a href="{% url 'booking_detail' booking.pk %}" style="color: #fff; text-decoration: underline;">{{ booking.guest_name }}</a></td>
+                <td>Room {{ booking.room.number }}</td>
+                <td>{{ booking.check_in_date }}</td>
+                <td>{{ booking.check_out_date }}</td>
+                <td style="color: #28a745;">
+                    {% with payment=booking.payment_set.first %}
+                        {% if payment %}${{ payment.amount }}{% else %}-{% endif %}
+                    {% endwith %}
+                </td>
+                <td>
+                    <div style="display: flex; gap: 0.5rem;">
+                         <!-- View Button -->
+                        <a href="{% url 'booking_detail' booking.pk %}" class="btn btn-xs btn-outline-info" style="border: 1px solid #17a2b8; color: #17a2b8; background: transparent;">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                        
+                        {% if user.is_authenticated %}
+                            <!-- Edit Button -->
+                            <a href="{% url 'booking_update' booking.pk %}" class="btn btn-xs btn-warning" style="background-color: #ffc107; border-color: #ffc107; color: #212529;">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            
+                            <!-- Delete Button (Renamed from Cancel) -->
+                            <a href="{% url 'booking_delete' booking.pk %}" class="btn btn-xs btn-danger" style="background-color: #dc3545; border-color: #dc3545; color: #fff;">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center">No bookings found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

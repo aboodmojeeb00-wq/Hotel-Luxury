@@ -1,0 +1,60 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Reviews | Luxury Hotel{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 50px 0;">
+    <h2 class="section-title text-center" style="margin-bottom: 2rem; color: #fff;">Guest <span class="gold-text" style="color: #d4af37;">Reviews</span></h2>
+    
+    <div class="text-center mb-4" style="text-align: right; margin-bottom: 2rem;">
+        <a href="{% url 'review_create' %}" class="btn btn-primary" style="background-color: #d4af37; border-color: #d4af37; color: #000; font-weight: bold;">
+            <i class="fas fa-pen"></i> Write a Review
+        </a>
+    </div>
+
+    <div class="table-container" style="background: #1a1a1a; padding: 20px; border-radius: 8px;">
+        <table class="table table-dark table-hover" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="color: #d4af37;">User</th>
+                    <th style="color: #d4af37;">Room</th>
+                    <th style="color: #d4af37;">Rating</th>
+                    <th style="color: #d4af37;">Comment</th>
+                    <th style="color: #d4af37;">Date</th>
+                    <th style="color: #d4af37;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                <tr>
+                    <td>{{ review.user.username }}</td>
+                    <td>Room {{ review.room.number }}</td>
+                    <td>
+                        <span style="color: gold;">
+                            {{ review.rating }} <i class="fas fa-star"></i>
+                        </span>
+                    </td>
+                    <td>{{ review.comment|truncatechars:50 }}</td>
+                    <td>{{ review.created_at|date:"M d, Y" }}</td>
+                    <td>
+                         <div style="display: flex; gap: 0.5rem;">
+                            {% if request.user == review.user or request.user.is_staff %}
+                                <a href="{% url 'review_update' review.pk %}" class="btn btn-xs btn-warning" style="background-color: #ffc107; border-color: #ffc107; color: #212529;">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="{% url 'review_delete' review.pk %}" class="btn btn-xs btn-danger" style="background-color: #dc3545; border-color: #dc3545; color: #fff;">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            {% endif %}
+                         </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center">No reviews found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

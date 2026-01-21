@@ -1,0 +1,38 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Payments - Luxury Hotel{% endblock %}
+{% block header %}All Payments{% endblock %}
+
+{% block content %}
+<div class="table-container" style="background: #1a1a1a; padding: 20px; border-radius: 8px;">
+    <table class="table table-dark table-hover" style="width: 100%;">
+        <thead>
+            <tr>
+                <th style="color: #d4af37;">Booking</th>
+                <th style="color: #d4af37;">Amount</th>
+                <th style="color: #d4af37;">Date</th>
+                <th style="color: #d4af37;">Method</th>
+                <th style="color: #d4af37;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payments %}
+            <tr>
+                <td>{{ payment.booking }}</td>
+                <td style="color: #28a745;">${{ payment.amount }}</td>
+                <td>{{ payment.date }}</td>
+                <td>{{ payment.payment_method }}</td>
+                <td>
+                    <!-- Payments usually happen auto, but let's show View Booking -->
+                    <a href="{% url 'booking_detail' payment.booking.pk %}" class="btn btn-sm btn-outline-info" style="padding: 4px 10px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 5px; border: 1px solid #17a2b8; color: #17a2b8; background: transparent;">
+                        <i class="fas fa-eye"></i> View Booking
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="text-center">No payments found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Luxury Hotel - The Legend{% endblock %}
+{% block header %}{% endblock %}
+
+{% block content %}
+<div class="landing-page-legendary">
+
+    <!-- Hero Section (Parallax & Dramatic) -->
+    <div class="hero-section-legendary" style="background-image: url('{{ MEDIA_URL }}hero_image.png');">
+        <div class="hero-overlay"></div>
+        <div class="hero-content fade-in-up">
+            <h1 class="hero-title">LUXURY <span class="gold-text">HOTEL</span></h1>
+            <p class="hero-subtitle">Where Midas Touches Modernity</p>
+            <div class="hero-buttons">
+                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-gold-shimmer">Enter The Realm</a>
+                <a href="#about" class="btn btn-outline btn-white">Discover More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="section-legendary about-section">
+        <div class="container-legendary">
+            <div class="about-grid">
+                <div class="about-text fade-in-left">
+                    <h2 class="section-title">The <span class="gold-text">Legacy</span></h2>
+                    <p class="lead-text">Established in the heart of the city, Luxury Hotel is not just a hotel; it is a
+                        statement.</p>
+                    <p>Designed for the elite, our architecture merges deep obsidian shadows with radiant gold. Every
+                        corner tells a story of opulence, silence, and power.</p>
+                    <p>We invite you to experience hospitality that anticipates your desires before you even whisper
+                        them.</p>
+                </div>
+                <div class="about-image fade-in-right">
+                    <!-- Use Lobby Image if available -->
+                    <img src="{{ MEDIA_URL }}lobby.png" alt="Grand Lobby" class="gold-framed-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities Section -->
+    <section class="section-legendary amenities-section">
+        <div class="container-legendary">
+            <div class="section-header-center">
+                <h2 class="section-title">World Class <span class="gold-text">Amenities</span></h2>
+                <p>Indulge in services redefined.</p>
+            </div>
+
+            <div class="amenities-grid">
+                <div class="amenity-card">
+                    <div class="amenity-image-wrapper">
+                        <img src="{{ MEDIA_URL }}gym.png" alt="Royal Gym">
+                    </div>
+                    <div class="amenity-content">
+                        <h3>Royal Gym</h3>
+                        <p>Forge your strength in an arena of gold and iron. State-of-the-art equipment meets panoramic
+                            views.</p>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <div class="amenity-image-wrapper">
+                        <!-- Spa Image (Using Suite or Placeholder if Spa failed) -->
+                        <img src="{{ MEDIA_URL }}spa.png" alt="Serenity Spa">
+                    </div>
+                    <div class="amenity-content">
+                        <h3>Serenity Spa</h3>
+                        <p>A sanctuary of silence. Black marble pools and golden steam rooms to rejuvenate your soul.
+                        </p>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <div class="amenity-image-wrapper">
+                        <img src="{{ MEDIA_URL }}pool.png" alt="Infinity Pool">
+                    </div>
+                    <div class="amenity-content">
+                        <h3>Sky Infinity Pool</h3>
+                        <p>Swim amongst the stars. Our temperature-controlled rooftop pool offers a view that conquers
+                            the city.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Rooms (Existing but styled up) -->
+    <section class="section-legendary featured-section-dark">
+        <div class="container-legendary">
+            <div class="section-header-center">
+                <h2 class="section-title">Royal <span class="gold-text">Chambers</span></h2>
+            </div>
+            <div class="rooms-grid-legendary">
+                {% for room in featured_rooms %}
+                <div class="room-card-legendary">
+                    <div class="room-img-frame">
+                        {% if room.image %}
+                        <img src="{{ room.image.url }}" alt="Room {{ room.number }}">
+                        {% else %}
+                        <div class="no-image-legendary">Icon</div>
+                        {% endif %}
+                        <div class="room-overlay">
+                            <a href="{% url 'room_detail' room.pk %}" class="btn btn-primary btn-sm">View</a>
+                        </div>
+                    </div>
+                    <div class="room-details-legendary">
+                        <h3>{{ room.get_room_type_display }}</h3>
+                        <p class="price">${{ room.price_per_night }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section-legendary testimonials-section">
+        <div class="container-legendary">
+            <h2 class="section-title-center">Voices of <span class="gold-text">Luxury</span></h2>
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <p class="quote">"I have stayed in palaces that felt less regal than this. The service is invisible
+                        yet omnipresent."</p>
+                    <p class="author">- Abdulrahman Mujeeb</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="quote">"The aesthetics are breathtaking. It's like living inside a piece of art."</p>
+                    <p class="author">- Anwar Ali</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="quote">"Simply Legendary. The Black & Gold theme is executed to perfection."</p>
+                    <p class="author">- Raouf Nazmi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-legendary">
+        <div class="container-legendary footer-grid">
+            <div class="footer-brand">
+                <h3>LUXURY HOTEL</h3>
+                <p>Redefining Luxury.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="{% url 'room_list' %}">Suites</a></li>
+                    <li><a href="#">Dining</a></li>
+                    <li><a href="#">Wellness</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>Sana'a,Yemen</p>
+                <p>Haddah Area</p>
+                <p>Phone +967 777777771</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Luxury Hotel Hotel. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</div>
+
+<style>
+    /* Inline critical styles for layout, detailed styles in style.css */
+    .landing-page-legendary {
+        overflow-x: hidden;
+    }
+</style>
+{% endblock %}

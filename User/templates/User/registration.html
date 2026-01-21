@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Us | Midnight Amethyst</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Registration-specific overrides (if any needed) */
+        .glass-card { max-width: 500px; } /* Slightly wider for registration */
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="glass-card">
+            <div class="auth-header">
+                <h2>JOIN <span>LUXURY</span></h2>
+                <p>Begin Your Legacy</p>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="auth-alert alert-{{ message.tags }}">
+                        <i class="fas fa-info-circle"></i> {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" action="{% url 'doRegistration' %}">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                <div class="floating-input-group">
+                    <input class="custom-input" 
+                           name="{{ field.name }}" 
+                           id="{{ field.id_for_label }}" 
+                           type="{{ field.field.widget.input_type }}" 
+                           placeholder=" " 
+                           {% if field.field.required %}required{% endif %}>
+                    
+                    <label for="{{ field.id_for_label }}" class="floating-label">{{ field.label }}</label>
+                    <i class="fas fa-edit"></i> <!-- Generic icon, hard to dynamically map in standard template without custom filters. -->
+
+                    {% if field.help_text %}
+                        <small style="display:block; text-align:left; color:#888; margin-top:5px; font-size:0.75rem;">{{ field.help_text|safe }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div style="text-align:left; color:#ff6b6b; font-size:0.8rem; margin-top:5px;">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="btn-gold btn-auth">
+                    Create Account <i class="fas fa-user-plus" style="margin-left: 10px;"></i>
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already a member? <a href="{% url 'login' %}">Sign In</a></p>
+                <p style="margin-top: 10px;"><a href="{% url 'landing' %}"><i class="fas fa-home"></i> Back to Hotel</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

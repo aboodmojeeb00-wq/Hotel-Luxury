@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Midnight Amethyst</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="glass-card">
+            <div class="auth-header">
+                <h2>MIDNIGHT <span>AMETHYST</span></h2>
+                <p>Welcome Back to Luxury</p>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="auth-alert alert-{{ message.tags }}">
+                        <i class="fas fa-info-circle"></i> {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="floating-input-group">
+                    <input type="text" name="username" id="username" class="custom-input" placeholder=" " required>
+                    <label for="username" class="floating-label">Username</label>
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="floating-input-group">
+                    <input type="password" name="password" id="password" class="custom-input" placeholder=" " required>
+                    <label for="password" class="floating-label">Password</label>
+                    <i class="fas fa-lock"></i>
+                </div>
+
+                <button type="submit" class="btn-gold btn-auth">
+                    Sign In <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>New guest? <a href="{% url 'registration' %}">Create an Account</a></p>
+                <p style="margin-top: 10px;"><a href="{% url 'landing' %}"><i class="fas fa-home"></i> Back to Hotel</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

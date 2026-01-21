@@ -1,0 +1,69 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Dashboard - LuxeStay{% endblock %}
+{% block header %}Dashboard Overview{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Rooms</h3>
+        <p class="stat-number">{{ total_rooms }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Occupied</h3>
+        <p class="stat-number">{{ occupied_rooms }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Available</h3>
+        <p class="stat-number">{{ available_rooms }}</p>
+    </div>
+    <!-- NEW STATS -->
+    <div class="stat-card">
+        <h3>Total Reviews</h3>
+        <p class="stat-number">{{ total_reviews }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Revenue</h3>
+        <p class="stat-number">${{ total_payments }}</p>
+    </div>
+</div>
+
+<div class="section-container">
+    <h2>Recent Bookings</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Guest</th>
+                    <th>Room</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in recent_bookings %}
+                <tr>
+                    <td>
+                        <a href="{% url 'booking_detail' booking.pk %}" style="text-decoration: none; color: inherit;">
+                            <div style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                {% if booking.room.image %}
+                                <img src="{{ booking.room.image.url }}" alt="Room" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
+                                {% endif %}
+                                <span style="font-weight: 500;">{{ booking.guest_name }}</span>
+                            </div>
+                        </a>
+                    </td>
+                    <td>{{ booking.room.number }}</td>
+                    <td>{{ booking.check_in_date }}</td>
+                    <td>{{ booking.check_out_date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No recent bookings.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

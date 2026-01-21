@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management System</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+        .auth-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        
+        <aside class="sidebar">
+            <div class="brand">
+                <h2>LUXURY HOTEL</h2>
+            </div>
+            <nav class="nav-links">
+                <a href="{% url 'dashboard' %}" class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="{% url 'room_list' %}" class="nav-item">
+                     <i class="fas fa-bed"></i>
+                    <span>Rooms</span>
+                </a>
+                <a href="{% url 'booking_list' %}" class="nav-item">
+                     <i class="fas fa-calendar-check"></i>
+                    <span>Bookings</span>
+                </a>
+                <a href="{% url 'review_list' %}" class="nav-item">
+                     <i class="fas fa-star"></i>
+                    <span>Reviews</span>
+                </a>
+                <a href="{% url 'home' %}" class="nav-item" >
+                     <i class="fas fa-user"></i>
+                    <span>Back to Home</span>
+                </a>
+                <a href="{% url 'room_create' %}" class="nav-item">
+                   <i class="fas fa-plus"></i>
+                   <span>Add Room</span>
+                </a>
+            </nav>
+            
+        </aside>
+        
+
+        <main class="main-content" >
+            
+            <header class="top-bar">
+                <h1>{% block header %}{% endblock %}</h1>
+            </header>
+            
+            <div class="content-area" >
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+
