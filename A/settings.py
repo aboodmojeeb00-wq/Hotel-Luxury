@@ -5,9 +5,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-+-*uoajni3(yn@a3264s3^nt9t(^y7irjq-=*!uc^w*m!67'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    'https://hotel-luxury-10.onrender.com',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -89,8 +92,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_URL = '/media/'
+STATIC_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
