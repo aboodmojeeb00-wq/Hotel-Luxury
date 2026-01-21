@@ -7,10 +7,21 @@ SECRET_KEY = 'django-insecure-+-*uoajni3(yn@a3264s3^nt9t(^y7irjq-=*!uc^w*m!67'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'hotel-luxury-10.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
+
 CSRF_TRUSTED_ORIGINS = [
     'https://hotel-luxury-10.onrender.com',
 ]
+
+# 🔥 هذا السطر هو الأهم
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
